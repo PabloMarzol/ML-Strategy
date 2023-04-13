@@ -10,26 +10,6 @@ import scipy as sp
 import timeit
 import pymysql
 
-def get_important_task():
-    
-    sql="""select a.name as flow, t_node_name as node, t_key as value, t_relationship as depandence, a.user_id as username from indata.nifi_stream_node
-           Left join indata.nifi_stream a on indata.nifi_stream_node.t_stream_id = a.id
-           order by t_stream_id asc, t_relationship desc"""
-    connection = pymysql.connect(
-                             host='10.250.50.139',
-                             port=3306,
-                             user='BDO',
-                             password='Cmhk1@345',
-                             cursorclass=pymysql.cursors.DictCursor)
-    with connection:
-        with connection.cursor() as cursor:
-            cursor.execute(sql)
-            result = cursor.fetchall()
-            data=pd.DataFrame.from_dict(result)       
-    
-    cursor.close()
-    return data
-
 warnings.filterwarnings('ignore')
 def Path_identification(data):
     start = timeit.default_timer()  
